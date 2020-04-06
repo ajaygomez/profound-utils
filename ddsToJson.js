@@ -338,7 +338,7 @@ const main = async (outDir, srcFile, srcLib, srcMbr) => {
       srcLines = await fsPromises.readFile(srcFile, 'utf8')
         .then(source => source.split(CRLF).map(srcLine => isNaN(Number.parseInt(srcLine.substr(0, 12))) ? srcLine : srcLine.substr(12)))
     }
-    logger.info('339\n');
+    logger.info(`srcLines: ${srcLines}\n`)
     // Check that this is a Rich Display file
     if (srcLines.findIndex(srcLine => srcLine.substr(44, 5) === 'HTML(') === -1) {
       const errText = 'The Input source file is not a Rich Display File'
