@@ -75,7 +75,7 @@ const execSql = async (inSql, inParams) => {
  */
 const readIbmISrcMbr = async (fil, lib, mbr, rtnFormat) => {
   try {
-    logger.debug('readIbmISrcMbr() started with : ', typeof fil, 'fil =', fil, ', ', typeof lib, 'lib =', lib, ', ', typeof mbr, 'mbr =', mbr, ', ', typeof rtnFormat, 'rtnFormat =', rtnFormat)
+    logger.info('readIbmISrcMbr() started with : ', typeof fil, 'fil =', fil, ', ', typeof lib, 'lib =', lib, ', ', typeof mbr, 'mbr =', mbr, ', ', typeof rtnFormat, 'rtnFormat =', rtnFormat)
 
     // Check if this is IBM i
     if (type() !== 'OS400') {
