@@ -101,7 +101,7 @@ const readIbmISrcMbr = async (fil, lib, mbr, rtnFormat) => {
       return ifsStreamFile
     } else {
       const streamData = await fsPromises.readFile(ifsStreamFile, 'utf8')
-
+      logger.info('after streamdata')
       fsPromises.unlink(ifsStreamFile)
         .then(x => fsPromises.rmdir(outDir))
 
