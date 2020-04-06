@@ -11,7 +11,7 @@ const logger = pino({
     colorize: true,
     ignore: 'time,pid,hostname'
   },
-  level: process.env.LOG_LEVEL || 'debug'
+  level: process.env.LOG_LEVEL || 'info'
 })
 
 const CRLF = '\r\n'
