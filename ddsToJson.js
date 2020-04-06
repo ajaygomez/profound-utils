@@ -316,6 +316,8 @@ const main = async (outDir, srcFile, srcLib, srcMbr) => {
       isDdsFile = true
     }
 
+    logger.debug(`isDdsFile: ${isDdsFile}\n`);
+
     isValidParameters = await validateParameters(outDir, srcFile, srcLib, srcMbr)
       .then(() => true)
       .catch(err => {
