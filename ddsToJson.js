@@ -384,12 +384,12 @@ if (require.main.filename !== module.filename) {
 
   main(outDirectory, inFil, inLib, inMbr)
     .then(result => {
-        if (isDdsFile) {
-          logger.info(`DDS file ${inLib.toUpperCase()}/${inFil.toUpperCase()}.${inMbr.toUpperCase()} was converted successfully.\n`)
-        } else {
-          logger.info(`DDS file ${inFil} was converted successfully.\n`)
-        }
+      if (isDdsFile) {
+        logger.info(`DDS file ${inLib.toUpperCase()}/${inFil.toUpperCase()}.${inMbr.toUpperCase()} was converted successfully.\n`)
+      } else {
+        logger.info(`DDS file ${inFil} was converted successfully.\n`)
       }
+    }
     )
     .catch(err => {
       logger.error(`${err}\n`)
