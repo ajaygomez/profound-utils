@@ -1,7 +1,6 @@
 'use strict'
 
-//const { promises: fsPromises, constants } = require('fs')
-const fs = require('fs')
+const { promises: fsPromises, constants } = require('fs')
 const { format, parse, resolve } = require('path')
 const { isValidLibrary, isValidDdsSourceFile, isValidDdsMember, readIbmISrcMbr, getIbmIMemberText } = require('./shared/asyncUtils')
 const pino = require('pino')
@@ -11,7 +10,7 @@ const logger = pino({
     colorize: true,
     ignore: 'time,pid,hostname'
   },
-  level: process.env.LOG_LEVEL || 'info'
+  level: process.env.LOG_LEVEL || 'debug'
 })
 
 const CRLF = '\r\n'
@@ -130,12 +129,10 @@ const validateParameters = async (outDir, fil, lib, mbr) => {
     if (typeof outDir === 'undefined') {
       err = `Output Directory was not specified.\n`
     } else {
-      err = await fs.stat(outDir)
+      err = await fsPromises.stat(outDir)
         .then(async stats => {
           if (!stats.isDirectory()) {
             return `Output Directory '${outDir}' exists but is not a directory.\n`
-          } else {
-            logger.debug('Output directory validated')
           }
         })
         .catch(() => `Output Directory '${outDir}' does not exist.\n`)
@@ -155,11 +152,11 @@ const validateParameters = async (outDir, fil, lib, mbr) => {
         } else if (mbr) {
           err = `Input File '${fil}' is a path-based name, so Input Member '${mbr}' must not be specified.\n`
         } else {
-          err = await fs.stat(fil)
+          err = await fsPromises.stat(fil)
             .then(stats => stats.isFile() ? null : `Input File '${fil}' exists but is not a file.\n`)
             .catch(() => `Input File '${fil}' does not exist.\n`)
           if (!err) {
-            err = await fs.access(fil, fs.R_OK)
+            err = await fsPromises.access(fil, constants.R_OK)
               .catch(() => `Input Source File '${fil}' exists, but you must have read permissions.\n`)
           }
         }
@@ -191,7 +188,7 @@ const validateParameters = async (outDir, fil, lib, mbr) => {
     }
     outFileName = format(pathObj)
 
-    err = await fs.open(outFileName, 'w')
+    err = await fsPromises.open(outFileName, 'w')
       .then(async handle => {
         await handle.close()
       })
@@ -336,7 +333,7 @@ const main = async (outDir, srcFile, srcLib, srcMbr) => {
       srcLines = await readIbmISrcMbr(srcFile, srcLib, srcMbr)
         .then(source => source.split(CRLF))
     } else {
-      srcLines = await fs.readFile(srcFile, 'utf8')
+      srcLines = await fsPromises.readFile(srcFile, 'utf8')
         .then(source => source.split(CRLF).map(srcLine => isNaN(Number.parseInt(srcLine.substr(0, 12))) ? srcLine : srcLine.substr(12)))
     }
 
@@ -358,7 +355,7 @@ const main = async (outDir, srcFile, srcLib, srcMbr) => {
 
     logger.info(`Writing output file : ${outFileName}\n`)
 
-    await fs.writeFile(outFileName, JSON.stringify(dspf, null, 2))
+    await fsPromises.writeFile(outFileName, JSON.stringify(dspf, null, 2))
 
     return outFileName
   } catch (error) {
@@ -387,12 +384,12 @@ if (require.main.filename !== module.filename) {
 
   main(outDirectory, inFil, inLib, inMbr)
     .then(result => {
-      if (isDdsFile) {
-        logger.info(`DDS file ${inLib.toUpperCase()}/${inFil.toUpperCase()}.${inMbr.toUpperCase()} was converted successfully.\n`)
-      } else {
-        logger.info(`DDS file ${inFil} was converted successfully.\n`)
+        if (isDdsFile) {
+          logger.info(`DDS file ${inLib.toUpperCase()}/${inFil.toUpperCase()}.${inMbr.toUpperCase()} was converted successfully.\n`)
+        } else {
+          logger.info(`DDS file ${inFil} was converted successfully.\n`)
+        }
       }
-    }
     )
     .catch(err => {
       logger.error(`${err}\n`)
