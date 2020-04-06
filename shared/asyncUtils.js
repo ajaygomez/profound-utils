@@ -93,7 +93,7 @@ const readIbmISrcMbr = async (fil, lib, mbr, rtnFormat) => {
 
     const srcFile = lib + '/' + fil + ' ' + mbr
 
-    const cpyStmt = `CPYTOIMPF FROMFILE(${srcFile}) TOSTMF('${ifsStreamFile}') MBROPT(*REPLACE) FROMCCSID(*FILE) STMFCCSID(37) RCDDLM(*CRLF) DTAFMT(*FIXED) RMVBLANK(*EOR)`
+    const cpyStmt = `CPYTOIMPF FROMFILE(${srcFile}) TOSTMF('${ifsStreamFile}') MBROPT(*REPLACE) FROMCCSID(*FILE) STMFCCSID(1208) RCDDLM(*CRLF) DTAFMT(*FIXED) RMVBLANK(*EOR)`
     logger.info(`cpyStmt : ${cpyStmt}\n`)
     await execSql('CALL QCMDEXC(?)', cpyStmt)
 
