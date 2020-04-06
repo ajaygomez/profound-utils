@@ -316,7 +316,7 @@ const main = async (outDir, srcFile, srcLib, srcMbr) => {
       isDdsFile = true
     }
 
-    logger.debug(`isDdsFile: ${isDdsFile}\n`);
+    logger.debug(`isDdsFile: ${isDdsFile}\n`)
 
     isValidParameters = await validateParameters(outDir, srcFile, srcLib, srcMbr)
       .then(() => true)
@@ -329,7 +329,7 @@ const main = async (outDir, srcFile, srcLib, srcMbr) => {
     }
 
     logger.info('Converting DDS to JSON...\n')
-
+    logger.debug(`isDdsFile: ${isDdsFile}\n`)
     let srcLines
     if (isDdsFile) {
       srcLines = await readIbmISrcMbr(srcFile, srcLib, srcMbr)
