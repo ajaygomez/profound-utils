@@ -108,6 +108,8 @@ const readIbmISrcMbr = async (fil, lib, mbr, rtnFormat) => {
       return streamData
     }
   } catch (error) {
+    logger.info(`error: ${error}\n`)
+    logger.info(`error stack: ${error.stack}\n`)
     return Promise.reject(error)
   }
 }
