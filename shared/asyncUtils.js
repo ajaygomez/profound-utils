@@ -19,7 +19,7 @@ const logger = pino({
  * @since 1.0.0
  */
 const getDBPool = async () => {
-  logger.debug('getDBPool() started with : ')
+  logger.info('getDBPool() started with : ')
 
   const { DBPool } = require('idb-pconnector')
 
@@ -36,7 +36,7 @@ const getDBPool = async () => {
  * @since 1.0.0
  */
 const runSql = async inSql => {
-  logger.debug('runSql() started with : ', typeof inSql, 'inSql =', inSql)
+  logger.info('runSql() started with : ', typeof inSql, 'inSql =', inSql)
 
   const pool = await getDBPool()
 
@@ -51,7 +51,7 @@ const runSql = async inSql => {
  * @since 1.0.0
  */
 const execSql = async (inSql, inParams) => {
-  logger.debug('execSql() started with : ', typeof inSql, 'inSql =', inSql, ', ', typeof inParams, 'inParams =', inParams)
+  logger.info('execSql() started with : ', typeof inSql, 'inSql =', inSql, ', ', typeof inParams, 'inParams =', inParams)
 
   const pool = await getDBPool()
 
@@ -122,7 +122,7 @@ const readIbmISrcMbr = async (fil, lib, mbr, rtnFormat) => {
  */
 const getIbmIMemberList = async (fil, lib, mbr) => {
   try {
-    logger.debug('getIbmIMemberList() started with : ', typeof fil, 'fil =', fil, ', ', typeof lib, 'lib =', lib, ', ', typeof mbr, 'mbr =', mbr)
+    logger.info('getIbmIMemberList() started with : ', typeof fil, 'fil =', fil, ', ', typeof lib, 'lib =', lib, ', ', typeof mbr, 'mbr =', mbr)
 
     lib = lib.toUpperCase()
     fil = fil.toUpperCase()
@@ -155,7 +155,7 @@ const getIbmIMemberList = async (fil, lib, mbr) => {
  */
 const getIbmIMemberText = async (fil, lib, mbr) => {
   try {
-    logger.debug('getIbmIMemberText() started with : ', typeof fil, 'fil =', fil, ', ', typeof lib, 'lib =', lib, ', ', typeof mbr, 'mbr =', mbr)
+    logger.info('getIbmIMemberText() started with : ', typeof fil, 'fil =', fil, ', ', typeof lib, 'lib =', lib, ', ', typeof mbr, 'mbr =', mbr)
 
     lib = lib.toUpperCase()
     fil = fil.toUpperCase()
@@ -186,7 +186,7 @@ const getIbmIMemberText = async (fil, lib, mbr) => {
  * @since 1.0.0
  */
 const isValidDdsMember = async (fil, lib, mbr) => {
-  logger.debug('isValidDdsMember() started with : ', typeof fil, 'fil =', fil, ', ', typeof lib, 'lib =', lib, ', ', typeof mbr, 'mbr =', mbr)
+  logger.info('isValidDdsMember() started with : ', typeof fil, 'fil =', fil, ', ', typeof lib, 'lib =', lib, ', ', typeof mbr, 'mbr =', mbr)
 
   const err = await getIbmIMemberText(fil, lib, mbr)
     .then(() => null)
@@ -205,7 +205,7 @@ const isValidDdsMember = async (fil, lib, mbr) => {
  * @since 1.0.0
  */
 const isValidDdsSourceFile = async (fil, lib) => {
-  logger.debug('isValidDdsSourceFile() started with : ', typeof fil, 'fil =', fil, ', ', typeof lib, 'lib =', lib)
+  logger.info('isValidDdsSourceFile() started with : ', typeof fil, 'fil =', fil, ', ', typeof lib, 'lib =', lib)
 
   const sqlStmt = `select 1 from QSYS2.SYSTABLES ` +
     `where SYSTEM_TABLE_SCHEMA = '${lib}' ` +
@@ -229,7 +229,7 @@ const isValidDdsSourceFile = async (fil, lib) => {
  * @since 1.0.0
  */
 const isValidLibrary = async lib => {
-  logger.debug('isValidLibrary() started with : ', typeof lib, 'lib =', lib)
+  logger.info('isValidLibrary() started with : ', typeof lib, 'lib =', lib)
 
   const sqlStmt = `select 1 from QSYS2.SYSSCHEMAS ` +
     `where SYSTEM_SCHEMA_NAME = '${lib}' ` +
