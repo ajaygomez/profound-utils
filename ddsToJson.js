@@ -338,13 +338,13 @@ const main = async (outDir, srcFile, srcLib, srcMbr) => {
       srcLines = await fsPromises.readFile(srcFile, 'utf8')
         .then(source => source.split(CRLF).map(srcLine => isNaN(Number.parseInt(srcLine.substr(0, 12))) ? srcLine : srcLine.substr(12)))
     }
-    logger.debug('339\n');
+    logger.info('339\n');
     // Check that this is a Rich Display file
     if (srcLines.findIndex(srcLine => srcLine.substr(44, 5) === 'HTML(') === -1) {
       const errText = 'The Input source file is not a Rich Display File'
       return Promise.reject(errText)
     }
-    logger.debug('345\n');
+    logger.info('345\n');
     const dspf = {
       text: isDdsFile ? await getIbmIMemberText(srcFile, srcLib, srcMbr) || '' : 'TODO - look for .ibmi properties',
       formats: await getFormatsFromSrc(srcLines),
